@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Akash_Ade.Models.ClubMember>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<style>
+    body {
+        background-color : cornsilk;
+    }
+
+</style>
+<p >
+    @*@Html.ActionLink("Create New", "Create")*@
+    <a href="@Url.Action("Create", "ClubMembers")" class="btn btn-info text-white">Create</a>
+</p>
+
+<div class="">
+    <form method="get" action="@Url.Action("Index")" class="form-inline">
+        <input type="text" name="SearchTerm" class="form-control mr-2" placeholder="Search by Member Name" value="@Request["SearchTerm"]" />
+        <br />
+        <button type="submit" class="btn btn-primary">Search</button>
+        <br />
+        <br />
+    </form>
+</div>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MemberName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MembershipCategory)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Remark)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Hobby.HobbyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Society.SocietyName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MembershipCategory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remark)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hobby.HobbyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Society.SocietyName)
+            </td>
+            @*<td>
+                <button type="submit" value="EDIT" class="btn btn-danger">@Html.ActionLink("Edit", "Edit", new { id = item.Id }) </button>
+                <button type="submit" value="Details" class="btn btn-dark"> @Html.ActionLink("Details", "Details", new { id = item.Id })  </button>
+                <button type="submit" value="EDIT" class="btn btn-info">   @Html.ActionLink("Delete", "Delete", new { id = item.Id }) </button>
+            </td>*@
+            <td>
+                <a href="@Url.Action("Edit", "ClubMembers", new { id = item.Id })" class="btn btn-danger text-white">Edit</a>
+                <a href="@Url.Action("Details", "ClubMembers", new { id = item.Id })" class="btn btn-dark text-white">Details</a>
+                <a href="@Url.Action("Delete", "ClubMembers", new { id = item.Id })" class="btn btn-primary text-white">Delete</a>
+
+                @*<button type="submit" value="Details" class="btn btn-dark"> @Html.ActionLink("Details", "", new { id = item.Id })  </button>
+            <button type="submit" value="EDIT" class="btn btn-info">   @Html.ActionLink("Delete", "", new { id = item.Id }) </button>*@
+
+            </td>
+        </tr>
+    }
+
+</table>

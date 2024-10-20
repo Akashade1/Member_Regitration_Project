@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="iBlueAnts_MembersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ClubMembers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MemberName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SocietyId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Gender" Type="int" Nullable="false" />
+          <Property Name="MembershipCategory" Type="int" Nullable="false" />
+          <Property Name="HobbiesId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="250" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
+        <EntityType Name="Hobbies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="HobbyName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
+        <EntityType Name="Society">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SocietyName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsActive" Type="int" />
+        </EntityType>
+        <Association Name="FK_ClubMembers_Hobbies">
+          <End Role="Hobbies" Type="Self.Hobbies" Multiplicity="1" />
+          <End Role="ClubMembers" Type="Self.ClubMembers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hobbies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClubMembers">
+              <PropertyRef Name="HobbiesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClubMembers_Society">
+          <End Role="Society" Type="Self.Society" Multiplicity="1" />
+          <End Role="ClubMembers" Type="Self.ClubMembers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Society">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClubMembers">
+              <PropertyRef Name="SocietyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="iBlueAnts_MembersModelStoreContainer">
+          <EntitySet Name="ClubMembers" EntityType="Self.ClubMembers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hobbies" EntityType="Self.Hobbies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Society" EntityType="Self.Society" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ClubMembers_Hobbies" Association="Self.FK_ClubMembers_Hobbies">
+            <End Role="Hobbies" EntitySet="Hobbies" />
+            <End Role="ClubMembers" EntitySet="ClubMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClubMembers_Society" Association="Self.FK_ClubMembers_Society">
+            <End Role="Society" EntitySet="Society" />
+            <End Role="ClubMembers" EntitySet="ClubMembers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="iBlueAnts_MembersModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ClubMember">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="MemberName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SocietyId" Type="Guid" Nullable="false" />
+          <Property Name="Gender" Type="Int32" Nullable="false" />
+          <Property Name="MembershipCategory" Type="Int32" Nullable="false" />
+          <Property Name="HobbiesId" Type="Guid" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Int32" />
+          <NavigationProperty Name="Hobby" Relationship="Self.FK_ClubMembers_Hobbies" FromRole="ClubMembers" ToRole="Hobbies" />
+          <NavigationProperty Name="Society" Relationship="Self.FK_ClubMembers_Society" FromRole="ClubMembers" ToRole="Society" />
+        </EntityType>
+        <EntityType Name="Hobby">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="HobbyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActive" Type="Int32" />
+          <NavigationProperty Name="ClubMembers" Relationship="Self.FK_ClubMembers_Hobbies" FromRole="Hobbies" ToRole="ClubMembers" />
+        </EntityType>
+        <EntityType Name="Society">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="SocietyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActive" Type="Int32" />
+          <NavigationProperty Name="ClubMembers" Relationship="Self.FK_ClubMembers_Society" FromRole="Society" ToRole="ClubMembers" />
+        </EntityType>
+        <Association Name="FK_ClubMembers_Hobbies">
+          <End Role="Hobbies" Type="Self.Hobby" Multiplicity="1" />
+          <End Role="ClubMembers" Type="Self.ClubMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hobbies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClubMembers">
+              <PropertyRef Name="HobbiesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClubMembers_Society">
+          <End Role="Society" Type="Self.Society" Multiplicity="1" />
+          <End Role="ClubMembers" Type="Self.ClubMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Society">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClubMembers">
+              <PropertyRef Name="SocietyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="iBlueAnts_MembersEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ClubMembers" EntityType="Self.ClubMember" />
+          <EntitySet Name="Hobbies" EntityType="Self.Hobby" />
+          <EntitySet Name="Societies" EntityType="Self.Society" />
+          <AssociationSet Name="FK_ClubMembers_Hobbies" Association="Self.FK_ClubMembers_Hobbies">
+            <End Role="Hobbies" EntitySet="Hobbies" />
+            <End Role="ClubMembers" EntitySet="ClubMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClubMembers_Society" Association="Self.FK_ClubMembers_Society">
+            <End Role="Society" EntitySet="Societies" />
+            <End Role="ClubMembers" EntitySet="ClubMembers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="iBlueAnts_MembersModelStoreContainer" CdmEntityContainer="iBlueAnts_MembersEntities2">
+          <EntitySetMapping Name="ClubMembers">
+            <EntityTypeMapping TypeName="iBlueAnts_MembersModel.ClubMember">
+              <MappingFragment StoreEntitySet="ClubMembers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="SocietyId" ColumnName="SocietyId" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="MembershipCategory" ColumnName="MembershipCategory" />
+                <ScalarProperty Name="HobbiesId" ColumnName="HobbiesId" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hobbies">
+            <EntityTypeMapping TypeName="iBlueAnts_MembersModel.Hobby">
+              <MappingFragment StoreEntitySet="Hobbies">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="HobbyName" ColumnName="HobbyName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Societies">
+            <EntityTypeMapping TypeName="iBlueAnts_MembersModel.Society">
+              <MappingFragment StoreEntitySet="Society">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SocietyName" ColumnName="SocietyName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

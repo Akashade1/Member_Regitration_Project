@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Akash_Ade.Models.Society>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<style>
+    body {
+        background-color: aliceblue;
+    }
+</style>
+
+<p class="btn btn-outline-info">
+
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SocietyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SocietyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            @*<td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>*@
+            <td>
+                <a href="@Url.Action("Edit", "Societies", new { id = item.Id })" class="btn btn-danger text-white">Edit</a>
+                <a href="@Url.Action("Details", "Societies", new { id = item.Id })" class="btn btn-dark text-white">Details</a>
+                <a href="@Url.Action("Delete", "Societies", new { id = item.Id })" class="btn btn-primary text-white">Delete</a>
+
+                @*<button type="submit" value="Details" class="btn btn-dark"> @Html.ActionLink("Details", "", new { id = item.Id })  </button>
+            <button type="submit" value="EDIT" class="btn btn-info">   @Html.ActionLink("Delete", "", new { id = item.Id }) </button>*@
+
+            </td>
+        </tr>
+    }
+
+</table>

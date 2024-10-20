@@ -1,0 +1,145 @@
+﻿@model Akash_Ade.Models.ClubMember
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>ClubMember</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.MemberName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MemberName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MemberName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SocietyId, "SocietyId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SocietyId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SocietyId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Gender", htmlAttributes: new { @class = "control-label col-md-2" })
+
+            <div class="col-md-10">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        @Html.RadioButtonFor(model => model.Gender, 0) Male
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        @Html.RadioButtonFor(model => model.Gender, 1) Female
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        @Html.RadioButtonFor(model => model.Gender, 2) Other
+                    </label>
+                </div>
+
+                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.Label("Membership Category", htmlAttributes: new { @class = "control-label col-md-2" })
+
+            <div class="col-md-10">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        @Html.RadioButtonFor(model => model.MembershipCategory, 1) A
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        @Html.RadioButtonFor(model => model.MembershipCategory, 2) B
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        @Html.RadioButtonFor(model => model.MembershipCategory, 3) C
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        @Html.RadioButtonFor(model => model.MembershipCategory, 4) D
+                    </label>
+                </div>
+
+                @Html.ValidationMessageFor(model => model.MembershipCategory, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.Label("Hobbies", htmlAttributes: new { @class = "control-label col-md-2" })
+
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.HobbiesId,
+                                      ViewBag.Hobbies as SelectList,
+                                      new { @class = "form-control hobbies-select" })
+
+                @Html.ValidationMessageFor(model => model.HobbiesId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Remark, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Is Active", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        @Html.RadioButtonFor(model => model.IsActive, 1) Yes
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        @Html.RadioButtonFor(model => model.IsActive, 0) No
+                    </label>
+                </div>
+
+                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-info" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
